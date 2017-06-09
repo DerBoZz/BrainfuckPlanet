@@ -8,9 +8,19 @@ public static class PlayerStats {
 
     public static int playerScore;
 
-    //public static Weapon [] weaponArray;
+    //public LinkedList<Weapon> weaponList;
 
     public static int currency;
+
+    public static void reset()
+    {
+        playerHealth = 100;
+        playerScore = 0;
+        currency = 0;
+
+       
+
+    }
 
 
 }
