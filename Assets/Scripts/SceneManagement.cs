@@ -10,5 +10,9 @@ public class SceneManagement : MonoBehaviour
     {
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
+    public static void loadSceneByIndex(int Index)
+    {
+
+    }
 
 }
