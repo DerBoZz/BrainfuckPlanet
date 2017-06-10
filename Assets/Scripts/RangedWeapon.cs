@@ -3,21 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RangedWeapon : Weapon {
-
-
-    public int ammunition;
+    private int ammunition;
     public GameObject projectilePrefab;
 
-    private void Update()
+    public RangedWeapon()
     {
-        Attack();
+        ammunition = 0;
+        enabled = false;
     }
 
-    public override void Attack()
+    public override void Attack(Vector3 direction)
     {
-        
         Instantiate(projectilePrefab, transform);
-        
+        ammunition--;
+        if(ammunition <= 0)
+        {
+            enabled = false;
+        }
     }
 
     public void GatherAmmo(int amount)
@@ -25,11 +27,6 @@ public class RangedWeapon : Weapon {
         ammunition += amount;
         enabledWeapon = true;
     }
-
-    public void OutOfAmmo()
-    {
-        enabledWeapon = false;
-
-    }
+    
 
 }

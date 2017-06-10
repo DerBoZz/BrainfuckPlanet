@@ -5,20 +5,30 @@ using UnityEngine;
 
 public class MeleeWeapon : Weapon {
 
-    public new bool enabledWeapon = true;
+    public float meleeRange;
+    public float animationTime;
+    public int damage;
 
-    public override void Attack()
+    public MeleeWeapon()
     {
-        throw new NotImplementedException();
+        enabled = false;
     }
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public override void Attack(Vector3 direction)
+    {
+        StartCoroutine(ChargeAttack(direction));
+    }
+
+    IEnumerator ChargeAttack(Vector3 direction)
+    {
+        //Play Animation
+        yield return new WaitForSeconds(animationTime);
+        //instead of transform.position handposition? , 
+        RaycastHit rh;
+        
+        if (Physics.Raycast(transform.position, direction, out rh, meleeRange, LayerMask.NameToLayer("Player")))
+        {
+            rh.collider.gameObject.gameObject.GetComponent<Player>().Damage(damage);
+        }
+    }
 }

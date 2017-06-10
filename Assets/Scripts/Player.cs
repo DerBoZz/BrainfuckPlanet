@@ -83,4 +83,14 @@ public class Player : MonoBehaviour {
         return Physics.Raycast(transform.position, Vector3.down, 1f, moveSettings.ground);
     }
     
+
+
+    public void Damage(int damage)
+    {
+        PlayerStats.playerHealth -= damage;
+        if(PlayerStats.playerHealth <= 0)
+        {
+            SceneManagement.loadScene("Menue");
+        }
+    }
 }

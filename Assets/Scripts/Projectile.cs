@@ -6,14 +6,13 @@ public class Projectile : MonoBehaviour {
 
     public int damage;
 
-    public float moveSpeed = 6;
-    public float amtToMove;
+    public float moveSpeed = 6.0f;
+    private float amtToMove;
 
-    public GameObject onHitEffect;
+    //public GameObject onHitEffect;
 	
 	// Update is called once per frame
-	void Update () {
-
+	void FixedUpdate () {
         amtToMove = moveSpeed * Time.deltaTime;
         transform.Translate(transform.position * amtToMove);
 	}
@@ -21,18 +20,16 @@ public class Projectile : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider other)
     {
-
         if(other.tag == "Enemy")
         {
             //Enemy enemy = other.gameObject.GetComponent("Enemy");
             //enemy.Damage(damage);
         }
 
-        Instantiate(onHitEffect, transform.position, Quaternion.identity);
+        //Instantiate(onHitEffect, transform.position, Quaternion.identity);
 
-        if(!this.gameObject.GetComponent<ParticleSystem>().IsAlive())
-            Destroy(gameObject);
-
+        //if(!this.gameObject.GetComponent<ParticleSystem>().IsAlive())
+        //    Destroy(gameObject);
     }
 }
 
