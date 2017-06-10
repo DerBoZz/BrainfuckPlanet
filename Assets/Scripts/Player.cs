@@ -38,11 +38,10 @@ public class Player : MonoBehaviour {
         PlayerStats.weaponList[0].gameObject.GetComponent<SpriteRenderer>().enabled = true;
 
         anim = GetComponent<Animator>();
-
-        airTime = 0;
+        
         jetpackTime = moveSettings.resetTimeJetpack;
         rb = gameObject.GetComponent<Rigidbody2D>();
-        sidewaysInput =  jumpInput = jetpackInput = switchWeaponInput=fire= 0;
+        sidewaysInput = airTime=  jumpInput = jetpackInput = switchWeaponInput=fire= 0;
         velocity = new Vector2(0, 0);
 	}
 	

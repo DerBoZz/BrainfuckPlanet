@@ -3,13 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RangedWeapon : Weapon {
-    private int ammunition;
+    public int ammunition;
     public GameObject projectilePrefab;
 
-    void Start()
-    {
-        ammunition = 0;
-    }
 
     public override void Attack()
     {
