@@ -22,6 +22,8 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        //remove reset!
+        PlayerStats.reset();
         airTime = 0;
         jetpackTime = moveSettings.resetTimeJetpack;
         rb = gameObject.GetComponent<Rigidbody2D>();

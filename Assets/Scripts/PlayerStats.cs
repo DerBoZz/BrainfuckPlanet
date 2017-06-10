@@ -8,19 +8,16 @@ public static class PlayerStats {
 
     public static int playerScore;
 
-    public static LinkedList<Weapon> weaponList;
+    public static Weapon[] weaponList;
 
     public static int currency;
 
     public static void reset()
     {
+        weaponList = new Weapon[2];
         playerHealth = 100;
         playerScore = 0;
         currency = 0;
-        MeleeWeapon pickaxe = new MeleeWeapon();
-        pickaxe.enabled = true;
-        weaponList.AddFirst(pickaxe);
-        
     }
 
 
