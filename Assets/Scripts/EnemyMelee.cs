@@ -45,7 +45,8 @@ public class EnemyMelee : Enemy {
         }
         else
         {
-            StartCoroutine(ChargeAttack());
+            ExecuteAttack();
+            Debug.Log("Attacking");
         }
         
     }
@@ -60,9 +61,14 @@ public class EnemyMelee : Enemy {
     {
         anim.SetBool("Attacking", true);
 
-        if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+        if( anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
         {
-
+            RaycastHit2D rh = Physics2D.Raycast(transform.position, directionPlayer, meleeRange, 1 << LayerMask.NameToLayer("Player"));
+            if (rh.collider != null)
+            {
+                rh.collider.gameObject.GetComponent<Player>().Damage(damage);
+            }
+            anim.SetBool("Attacking", false);
         }
 
 
