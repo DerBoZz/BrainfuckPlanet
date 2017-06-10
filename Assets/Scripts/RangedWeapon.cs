@@ -12,7 +12,7 @@ public class RangedWeapon : Weapon {
         enabled = false;
     }
 
-    public override void Attack(Vector3 direction)
+    public override void Attack()
     {
         Instantiate(projectilePrefab, transform);
         ammunition--;

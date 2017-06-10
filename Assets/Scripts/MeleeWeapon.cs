@@ -14,21 +14,20 @@ public class MeleeWeapon : Weapon {
         enabled = false;
     }
 
-    public override void Attack(Vector3 direction)
+    public override void Attack()
     {
-        StartCoroutine(ChargeAttack(direction));
+        StartCoroutine(ChargeAttack());
     }
 
-    IEnumerator ChargeAttack(Vector3 direction)
+    IEnumerator ChargeAttack()
     {
         //Play Animation
         yield return new WaitForSeconds(animationTime);
-        //instead of transform.position handposition? , 
+        //instead of transform.position handposition? 
         RaycastHit rh;
-        
-        if (Physics.Raycast(transform.position, direction, out rh, meleeRange, LayerMask.NameToLayer("Player")))
+        if (Physics.Raycast(transform.position, Vector3.forward, out rh, meleeRange, LayerMask.NameToLayer("Enemy")))
         {
-            rh.collider.gameObject.gameObject.GetComponent<Player>().Damage(damage);
+            rh.collider.gameObject.GetComponent<Enemy>().Damage(damage);
         }
     }
 }
