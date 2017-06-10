@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class CopyPaste : MonoBehaviour {
 
+
+
+    public void UpdateTarget()          //makes transform look at mousepos
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //mousePos = mousePos - transform.position;
+        mousePos.z = 0;
+        transform.LookAt(mousePos, Vector3.up);
+        //transform.rotation = Quaternion.Euler(mousePos.x, mousePos.y, 0);
+
+    }
+
+
+
     public float speed = 1;
     float age = 0;
     public float maxAge = 1;
