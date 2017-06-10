@@ -9,7 +9,19 @@ public class RangedWeapon : Weapon {
 
     public override void Attack()
     {
-        Instantiate(projectilePrefab, gameObject.GetComponentsInChildren<Transform>()[1].transform.position, transform.rotation);
+        if(transform.localScale.x > 0.0f)
+        {
+            //Facing right
+            Instantiate(projectilePrefab, gameObject.GetComponentsInChildren<Transform>()[1].transform.position, transform.rotation);
+        }
+        else if(transform.localScale.x > 0.0f)
+        {
+            //Facing Left
+            Quaternion rot = transform.rotation;
+            rot *= Quaternion.Euler(0, 0, 180);
+            //Transform bullet = Instantiate(projectilePrefab, gameObject.GetComponentsInChildren<Transform>()[1].transform.position, transform.rotation) as Transform;
+                
+        }
         ammunition--;
         if(ammunition <= 0)
         {

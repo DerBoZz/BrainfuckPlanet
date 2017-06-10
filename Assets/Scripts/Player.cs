@@ -88,10 +88,32 @@ public class Player : MonoBehaviour {
         {
             fire = 1.0f;
         }
+
+        Vector3 mousedir = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
+        if (mousedir.x <= transform.position.x && transform.localScale.x > 0.0f)
+        {
+            //mouse left and facing right -> switch to facing left
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        }
+        else if (mousedir.x > transform.position.x && transform.localScale.x < 0.0f)
+        {
+            //mouse right and facing left -> switch to facing right
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        }
         //Weapon look at mouse
         Vector3 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.transform.position);
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        
+        if (transform.localScale.x > 0.0f)
+        {
+            //Facing Right
+            PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        }else if (transform.localScale.x < 0.0f)
+        {
+            //FacingLeft
+            PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.transform.Rotate(new Vector3(0,0,1),180);
+        }
     }
     private void FireWeapon()
     {
