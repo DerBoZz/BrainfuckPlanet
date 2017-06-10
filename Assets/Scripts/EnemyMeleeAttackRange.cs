@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class EnemyMeleeAttackRange : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+	void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.tag == "Player")
+        {
+            transform.parent.GetComponent<EnemyMelee>().Attack();
+        }
+    }
 }

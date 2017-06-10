@@ -48,7 +48,7 @@ public class Player : MonoBehaviour {
         {
             airTime += Time.deltaTime;
         }
-        if (Input.GetKeyDown(KeyCode.Space) && Grounded())
+        if (Input.GetKey(KeyCode.Space) && Grounded())
         {
             jumpInput = 1.0f;
             airTime = 0;
@@ -73,7 +73,7 @@ public class Player : MonoBehaviour {
         }
         else if(jetpackInput != 0 && jetpackTime >= 0)
         {
-            rb.velocity = new Vector2(rb.velocity.x, moveSettings.jetpackVelocity);
+            rb.velocity = new Vector2(rb.velocity.x, moveSettings.jetpackVelocity * Time.deltaTime + rb.velocity.y);
             jetpackTime -= Time.deltaTime;
         }
         
