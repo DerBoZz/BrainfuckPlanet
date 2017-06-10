@@ -7,6 +7,13 @@ public abstract class Enemy : MonoBehaviour {
     public int health;
 
 
-    public abstract void Damage(int damageGet);
+    public void Damage(int damageGet)
+    {
+        health -= damageGet;
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
 
 }

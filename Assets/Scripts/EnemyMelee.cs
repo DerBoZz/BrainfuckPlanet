@@ -65,15 +65,5 @@ public class EnemyMelee : Enemy {
         }
         attacking = false;
     }
-
-    public override void Damage(int damageGet)
-    {
-        health -= damageGet;
-        if(health <= 0)
-        {
-            //Play Death Animation + wait
-            Destroy(gameObject);
-        }
-    }
 }
     
