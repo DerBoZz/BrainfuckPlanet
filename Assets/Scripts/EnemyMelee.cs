@@ -56,6 +56,18 @@ public class EnemyMelee : Enemy {
         directionPlayer = aDirectionPlayer;
     }
 
+    private void ExecuteAttack()
+    {
+        anim.SetBool("Attacking", true);
+
+        if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+        {
+
+        }
+
+
+    }
+
     private IEnumerator ChargeAttack()
     {
         //Play Animation
