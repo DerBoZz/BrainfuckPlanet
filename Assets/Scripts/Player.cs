@@ -85,10 +85,10 @@ public class Player : MonoBehaviour {
         {
             fire = 1.0f;
         }
-
-        float AngleRad = Mathf.Atan2(Input.mousePosition.y - transform.position.y, Input.mousePosition.x - transform.position.x);
-        float AngleDeg = (180 / Mathf.PI) * AngleRad;
-        PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.transform.rotation = Quaternion.Euler(0, 0, AngleDeg);
+        //Weapon look at mouse
+        Vector3 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.transform.position);
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
     private void FireWeapon()
     {

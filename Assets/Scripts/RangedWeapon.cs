@@ -13,7 +13,9 @@ public class RangedWeapon : Weapon {
 
     public override void Attack()
     {
-        Instantiate(projectilePrefab, gameObject.GetComponentsInChildren<Transform>()[1].position,Quaternion.identity);
+        Vector3 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.transform.position);
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        Instantiate(projectilePrefab, gameObject.GetComponentsInChildren<Transform>()[1].position, Quaternion.AngleAxis(angle, Vector3.forward));
         ammunition--;
         if(ammunition <= 0)
         {
