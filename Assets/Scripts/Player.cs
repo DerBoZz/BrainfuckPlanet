@@ -56,6 +56,7 @@ public class Player : MonoBehaviour {
         FireWeapon();
         Move();
         Jump();
+        Animation();
         if (switchWeaponInput!=0.0f)
         {
             SwitchWeapon();
@@ -116,10 +117,6 @@ public class Player : MonoBehaviour {
     }
     private void Move()
     {
-        if (sidewaysInput == 0)
-            anim.SetBool("Moving", false);
-        else if(jumpInput == 0 && sidewaysInput != 0)
-            anim.SetBool("Moving", true);
         velocity.x = sidewaysInput * moveSettings.playerSpeed;
         velocity.y = rb.velocity.y - moveSettings.gravity;
         rb.velocity = transform.TransformDirection(velocity);
@@ -128,22 +125,16 @@ public class Player : MonoBehaviour {
     {
         if (jumpInput != 0)
         {
-            anim.SetBool("Jumping", true);
+
             rb.velocity = new Vector2(rb.velocity.x, moveSettings.jumpVelocity);
             jetpackTime = moveSettings.resetTimeJetpack;
         }
         else if(jetpackInput != 0 && jetpackTime >= 0)
         {
-            anim.SetBool("Flying", true);
+
             rb.velocity = new Vector2(rb.velocity.x, moveSettings.jetpackVelocity * Time.deltaTime + rb.velocity.y*0.99f);
             jetpackTime -= Time.deltaTime;
         }
-        if(jetpackInput == 0)
-            anim.SetBool("Flying", false);
-        if (jumpInput == 0)
-            anim.SetBool("Jumping", false);
-
-        
 
     }
     private bool Grounded()
@@ -160,5 +151,34 @@ public class Player : MonoBehaviour {
         {
             //SceneManagement.loadScene("Menue");
         }
+    }
+
+    private void Animation()
+    {
+        if (!Grounded() && jetpackInput != 0 && jetpackTime >= 0)
+        {
+            anim.SetBool("Flying", true);
+            anim.SetBool("Moving", false);
+            anim.SetBool("Jumping", true);
+        }
+        else if (!Grounded())
+        {
+            anim.SetBool("Jumping", true);
+            anim.SetBool("Moving", false);
+            anim.SetBool("Flying", false);
+        }
+        else if (sidewaysInput != 0)
+        {
+            anim.SetBool("Moving", true);
+            anim.SetBool("Flying", false);
+            anim.SetBool("Jumping", false);
+        }
+        else
+        {
+            anim.SetBool("Moving", false);
+            anim.SetBool("Flying", false);
+            anim.SetBool("Jumping", false);
+        }
+
     }
 }
