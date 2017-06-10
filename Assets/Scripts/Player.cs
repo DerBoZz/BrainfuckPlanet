@@ -24,6 +24,7 @@ public class Player : MonoBehaviour {
 	void Start () {
         //remove reset!
         PlayerStats.reset();
+        PlayerStats.weaponList[0] = new MeleeWeapon();
         airTime = 0;
         jetpackTime = moveSettings.resetTimeJetpack;
         rb = gameObject.GetComponent<Rigidbody2D>();
