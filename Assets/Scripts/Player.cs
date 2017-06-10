@@ -157,24 +157,28 @@ public class Player : MonoBehaviour {
     {
         if (!Grounded() && jetpackInput != 0 && jetpackTime >= 0)
         {
+            //Jetpack
             anim.SetBool("Flying", true);
             anim.SetBool("Moving", false);
             anim.SetBool("Jumping", true);
         }
         else if (!Grounded())
         {
+            //Jumping
             anim.SetBool("Jumping", true);
             anim.SetBool("Moving", false);
             anim.SetBool("Flying", false);
         }
         else if (sidewaysInput != 0)
         {
+            //Moving
             anim.SetBool("Moving", true);
             anim.SetBool("Flying", false);
             anim.SetBool("Jumping", false);
         }
         else
         {
+            //Idle
             anim.SetBool("Moving", false);
             anim.SetBool("Flying", false);
             anim.SetBool("Jumping", false);
