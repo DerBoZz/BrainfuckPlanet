@@ -11,7 +11,6 @@ public class MeleeWeapon : Weapon {
 
     void Start()
     {
-        equipable = false;
     }
 
     public override void Attack()

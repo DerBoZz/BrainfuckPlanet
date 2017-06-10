@@ -16,7 +16,7 @@ public class Player : MonoBehaviour {
     }
     public MoveSettings moveSettings;
     private Vector2 velocity;
-    private float sidewaysInput, jumpInput , jetpackInput, switchWeapon, fire;
+    private float sidewaysInput, jumpInput , jetpackInput, switchWeaponInput, fire;
     private float jetpackTime, airTime;
     private Rigidbody2D rb;
 
@@ -39,7 +39,7 @@ public class Player : MonoBehaviour {
         airTime = 0;
         jetpackTime = moveSettings.resetTimeJetpack;
         rb = gameObject.GetComponent<Rigidbody2D>();
-        sidewaysInput =  jumpInput = jetpackInput = switchWeapon=fire= 0;
+        sidewaysInput =  jumpInput = jetpackInput = switchWeaponInput=fire= 0;
         velocity = new Vector2(0, 0);
 	}
 	
@@ -50,9 +50,14 @@ public class Player : MonoBehaviour {
 
     void FixedUpdate()
     {
-        Weapon();
+        FireWeapon();
         Move();
         Jump();
+        if (switchWeaponInput!=0.0f)
+        {
+            SwitchWeapon();
+            switchWeaponInput = 0.0f;
+        }
     }
     void GetInput()
     {
@@ -74,7 +79,7 @@ public class Player : MonoBehaviour {
         }
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            switchWeapon = 1.0f;
+            switchWeaponInput = 1.0f;
         }
         if (Input.GetMouseButtonDown(0))
         {
@@ -85,22 +90,26 @@ public class Player : MonoBehaviour {
         float AngleDeg = (180 / Mathf.PI) * AngleRad;
         PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.transform.rotation = Quaternion.Euler(0, 0, AngleDeg);
     }
-    private void Weapon()
+    private void FireWeapon()
     {
         if (fire != 0.0f)
         {
             PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.GetComponent<Weapon>().Attack();
+            if (!PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.GetComponent<Weapon>().equipable)
+            {
+                SwitchWeapon();
+            }
+            fire = 0.0f;
         }
-        if (switchWeapon != 0.0f)
-        {
+    }
+    private void SwitchWeapon()
+    {
             PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.GetComponent<SpriteRenderer>().enabled = false;
             do
             {
                 PlayerStats.equipedWeapon = (PlayerStats.equipedWeapon + 1) % PlayerStats.weaponList.Length;
             } while (!PlayerStats.weaponList[PlayerStats.equipedWeapon].equipable);
             PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.GetComponent<SpriteRenderer>().enabled = true;
-            switchWeapon = 0.0f;
-        }
     }
     private void Move()
     {

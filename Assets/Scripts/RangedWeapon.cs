@@ -9,12 +9,11 @@ public class RangedWeapon : Weapon {
     void Start()
     {
         ammunition = 0;
-        equipable = false;
     }
 
     public override void Attack()
     {
-        Instantiate(projectilePrefab, transform);
+        Instantiate(projectilePrefab, gameObject.GetComponentsInChildren<Transform>()[1].position,Quaternion.identity);
         ammunition--;
         if(ammunition <= 0)
         {

@@ -8,6 +8,7 @@ public class Projectile : MonoBehaviour {
 
     public float moveSpeed = 6.0f;
     private float amtToMove;
+    private float lifetime = 2.0f;
 
     //public GameObject onHitEffect;
 	
@@ -15,6 +16,11 @@ public class Projectile : MonoBehaviour {
 	void FixedUpdate () {
         amtToMove = moveSpeed * Time.deltaTime;
         transform.Translate(transform.position * amtToMove);
+        lifetime -= Time.deltaTime;
+        if(lifetime <= 0.0f)
+        {
+            Destroy(gameObject);
+        }
 	}
 
 
@@ -22,8 +28,8 @@ public class Projectile : MonoBehaviour {
     {
         if(col.tag == "Enemy")
         {
-            //Enemy enemy = other.gameObject.GetComponent("Enemy");
-            //enemy.Damage(damage);
+            Enemy en = col.gameObject.GetComponent<Enemy>();
+            en.Damage(damage);
         }
 
         //Instantiate(onHitEffect, transform.position, Quaternion.identity);
