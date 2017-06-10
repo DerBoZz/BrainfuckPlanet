@@ -81,7 +81,7 @@ public class Player : MonoBehaviour {
     }
     private bool Grounded()
     {
-        return Physics2D.Raycast(transform.position, Vector2.down, gameObject.GetComponent<BoxCollider2D>().size.y/2+0.1f, moveSettings.ground);
+        return Physics2D.Raycast(transform.position, Vector2.down, 1.2f, moveSettings.ground);
     }
 
 
