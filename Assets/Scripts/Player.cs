@@ -100,20 +100,26 @@ public class Player : MonoBehaviour {
             //mouse right and facing left -> switch to facing right
             transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
-        //Weapon look at mouse
-        Vector3 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.transform.position);
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        
-        if (transform.localScale.x > 0.0f)
+
+        if(PlayerStats.weaponList[PlayerStats.equipedWeapon].GetType().ToString() == "RangedWeapon")
         {
-            //Facing Right
-            PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        }else if (transform.localScale.x < 0.0f)
-        {
-            //FacingLeft
-            PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.transform.Rotate(new Vector3(0,0,1),180);
+            //RangedWeapon look at mouse
+            Vector3 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.transform.position);
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+            if (transform.localScale.x > 0.0f)
+            {
+                //Facing Right
+                PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            }
+            else if (transform.localScale.x < 0.0f)
+            {
+                //FacingLeft
+                PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+                PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.transform.Rotate(new Vector3(0, 0, 1), 180);
+            }
         }
+        
     }
     private void FireWeapon()
     {
@@ -204,6 +210,5 @@ public class Player : MonoBehaviour {
             anim.SetBool("Flying", false);
             anim.SetBool("Jumping", false);
         }
-
     }
 }
