@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyMelee : Enemy {
     public float meleeRange;
-    public float animationTime;
     
     public float movementSpeed;
     public Transform[] waypoints;
@@ -12,6 +11,7 @@ public class EnemyMelee : Enemy {
     private bool attacking;
     private int current;
     private bool forward;
+    private Vector2 directionPlayer;
 
     void Start()
     {
@@ -41,24 +41,27 @@ public class EnemyMelee : Enemy {
                 forward = !forward;
             }
         }
+        else
+        {
+            StartCoroutine(ChargeAttack());
+        }
         
     }
 
-    public void Attack()
+    public void Attack(Vector2 aDirectionPlayer)
     {
         attacking = true;
-        StartCoroutine(ChargeAttack());
+        directionPlayer = aDirectionPlayer;
     }
 
-    IEnumerator ChargeAttack()
+    private IEnumerator ChargeAttack()
     {
         //Play Animation
-        yield return new WaitForSeconds(animationTime);
-        //instead of transform.position handposition? 
-        RaycastHit2D rh = Physics2D.Raycast(transform.position, Vector2.right, meleeRange, LayerMask.NameToLayer("Player"));
+        yield return new WaitForSeconds(1);
+        RaycastHit2D rh = Physics2D.Raycast(transform.position, directionPlayer, meleeRange, 1 << LayerMask.NameToLayer("Player"));
         if (rh.collider != null)
         {
-            rh.collider.gameObject.gameObject.GetComponent<Player>().Damage(damage);
+            rh.collider.gameObject.GetComponent<Player>().Damage(damage);
         }
         attacking = false;
     }
