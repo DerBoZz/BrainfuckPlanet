@@ -10,11 +10,14 @@ public static class PlayerStats {
 
     public static Weapon[] weaponList;
 
+    public static int equipedWeapon;
+
     public static int currency;
 
     public static void reset()
     {
         weaponList = new Weapon[2];
+        equipedWeapon = 0;
         playerHealth = 100;
         playerScore = 0;
         currency = 0;

@@ -16,7 +16,7 @@ public class Player : MonoBehaviour {
     }
     public MoveSettings moveSettings;
     private Vector2 velocity;
-    private float sidewaysInput, jumpInput , jetpackInput;
+    private float sidewaysInput, jumpInput , jetpackInput, switchWeapon;
     private float jetpackTime, airTime;
     private Rigidbody2D rb;
 
@@ -24,11 +24,11 @@ public class Player : MonoBehaviour {
 	void Start () {
         //remove reset!
         PlayerStats.reset();
-        PlayerStats.weaponList[0] = new MeleeWeapon();
+        PlayerStats.weaponList[0] = GetComponentInChildren<RangedWeapon>();
         airTime = 0;
         jetpackTime = moveSettings.resetTimeJetpack;
         rb = gameObject.GetComponent<Rigidbody2D>();
-        sidewaysInput =  jumpInput = jetpackInput = 0;
+        sidewaysInput =  jumpInput = jetpackInput = switchWeapon= 0;
         velocity = new Vector2(0, 0);
 	}
 	
@@ -39,6 +39,7 @@ public class Player : MonoBehaviour {
 
     void FixedUpdate()
     {
+        Weapon();
         Move();
         Jump();
     }
@@ -46,6 +47,7 @@ public class Player : MonoBehaviour {
     {
         jumpInput = 0;
         jetpackInput = 0;
+        switchWeapon = 0;
         sidewaysInput = Input.GetAxis("Horizontal");
         if (!Grounded())
         {
@@ -59,6 +61,20 @@ public class Player : MonoBehaviour {
         if(Input.GetKey(KeyCode.Space) && !Grounded() && airTime > 0.2f)
         {
             jetpackInput = 1.0f;
+        }
+        if (Input.GetKey(KeyCode.Tab))
+        {
+            switchWeapon = 1.0f;
+        }
+    }
+    private void Weapon()
+    {
+        if (switchWeapon != 0.0f)
+        {
+            do
+            {
+                PlayerStats.equipedWeapon = (PlayerStats.equipedWeapon + 1) % PlayerStats.weaponList.Length;
+            } while (!PlayerStats.weaponList[PlayerStats.equipedWeapon].equipable);
         }
     }
     private void Move()
@@ -84,7 +100,7 @@ public class Player : MonoBehaviour {
     }
     private bool Grounded()
     {
-        return Physics2D.Raycast(transform.position, Vector2.down, 1.2f, moveSettings.ground);
+        return Physics2D.Raycast(transform.position, Vector2.down, 1f, moveSettings.ground);
     }
 
 

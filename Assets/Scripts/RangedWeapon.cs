@@ -6,10 +6,10 @@ public class RangedWeapon : Weapon {
     private int ammunition;
     public GameObject projectilePrefab;
 
-    public RangedWeapon()
+    void Start()
     {
         ammunition = 0;
-        enabled = false;
+        equipable = false;
     }
 
     public override void Attack()
@@ -18,14 +18,14 @@ public class RangedWeapon : Weapon {
         ammunition--;
         if(ammunition <= 0)
         {
-            enabled = false;
+            equipable = false;
         }
     }
 
     public void GatherAmmo(int amount)
     {
         ammunition += amount;
-        enabledWeapon = true;
+        equipable = true;
     }
     
 

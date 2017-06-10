@@ -9,9 +9,9 @@ public class MeleeWeapon : Weapon {
     public float animationTime;
     public int damage;
 
-    public MeleeWeapon()
+    void Start()
     {
-        enabled = false;
+        equipable = false;
     }
 
     public override void Attack()
