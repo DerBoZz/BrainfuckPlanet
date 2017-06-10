@@ -17,7 +17,16 @@ public class SceneManagement : MonoBehaviour
 
     public static void nextScene()
     {
+        Debug.Log("Loaded Scene " + (SceneManager.GetActiveScene().buildIndex + 1));
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            nextScene();
+        }
     }
 
 }
