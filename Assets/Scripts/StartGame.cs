@@ -9,8 +9,11 @@ public class StartGame : MonoBehaviour {
 		
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    void Update()
+    {
+        if (Input.anyKeyDown)
+        {
+            SceneManagement.loadScene("Level1");
+        }
+    }
 }
