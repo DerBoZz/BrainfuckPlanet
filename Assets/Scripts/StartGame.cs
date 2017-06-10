@@ -13,7 +13,7 @@ public class StartGame : MonoBehaviour {
     {
         if (Input.anyKeyDown)
         {
-            SceneManagement.loadScene("Level1");
+            SceneManagement.nextScene();
         }
     }
 }

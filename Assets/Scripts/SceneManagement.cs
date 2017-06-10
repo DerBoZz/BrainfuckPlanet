@@ -12,7 +12,12 @@ public class SceneManagement : MonoBehaviour
     }
     public static void loadSceneByIndex(int Index)
     {
+        SceneManager.LoadScene(Index);
+    }
 
+    public static void nextScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 
 }
