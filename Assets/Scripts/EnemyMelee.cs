@@ -12,12 +12,14 @@ public class EnemyMelee : Enemy {
     private int current;
     private bool forward;
     private Vector2 directionPlayer;
+    private Animator anim;
 
     void Start()
     {
         attacking = false;
         forward = true;
         current = 0;
+        anim = gameObject.GetComponent<Animator>();
     }
 
     void Update()
@@ -57,6 +59,7 @@ public class EnemyMelee : Enemy {
     private IEnumerator ChargeAttack()
     {
         //Play Animation
+        anim.SetBool("Attacking", true);
         yield return new WaitForSeconds(1);
         RaycastHit2D rh = Physics2D.Raycast(transform.position, directionPlayer, meleeRange, 1 << LayerMask.NameToLayer("Player"));
         if (rh.collider != null)
