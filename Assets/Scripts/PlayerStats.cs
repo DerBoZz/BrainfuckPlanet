@@ -18,6 +18,7 @@ public static class PlayerStats {
         playerScore = 0;
         currency = 0;
         MeleeWeapon pickaxe = new MeleeWeapon();
+        pickaxe.enabled = true;
         weaponList.AddFirst(pickaxe);
         
     }

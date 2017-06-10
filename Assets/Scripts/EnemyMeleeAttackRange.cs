@@ -6,9 +6,20 @@ public class EnemyMeleeAttackRange : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.tag == "Player")
+        if (col.gameObject.tag == "Player")
         {
-            transform.parent.GetComponent<EnemyMelee>().Attack();
+            Vector2 directionPlayer;
+            if(col.gameObject.transform.position.x > transform.position.x)
+            {
+                //rightside
+                directionPlayer = new Vector2(1, 0);
+            }
+            else
+            {
+                //leftside
+                directionPlayer = new Vector2(-1, 0);
+            }
+            transform.parent.GetComponent<EnemyMelee>().Attack(directionPlayer);
         }
     }
 }

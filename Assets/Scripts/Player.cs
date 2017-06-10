@@ -73,7 +73,7 @@ public class Player : MonoBehaviour {
         }
         else if(jetpackInput != 0 && jetpackTime >= 0)
         {
-            rb.velocity = new Vector2(rb.velocity.x, moveSettings.jetpackVelocity * Time.deltaTime + rb.velocity.y);
+            rb.velocity = new Vector2(rb.velocity.x, moveSettings.jetpackVelocity * Time.deltaTime + rb.velocity.y*0.99f);
             jetpackTime -= Time.deltaTime;
         }
         
@@ -91,7 +91,7 @@ public class Player : MonoBehaviour {
         PlayerStats.playerHealth -= damage;
         if(PlayerStats.playerHealth <= 0)
         {
-            SceneManagement.loadScene("Menue");
+            //SceneManagement.loadScene("Menue");
         }
     }
 }
