@@ -16,26 +16,37 @@ public class Player : MonoBehaviour {
     }
     public MoveSettings moveSettings;
     private Vector2 velocity;
-    private float sidewaysInput, jumpInput , jetpackInput, switchWeapon;
+    private float sidewaysInput, jumpInput , jetpackInput, switchWeapon, fire;
     private float jetpackTime, airTime;
     private Rigidbody2D rb;
 
-	// Use this for initialization
-	void Start () {
+    public SpriteRenderer arm;
+    public SpriteRenderer shoulder;
+    // Use this for initialization
+    void Start () {
         //remove reset!
         PlayerStats.reset();
-        PlayerStats.weaponList[0] = GetComponentInChildren<RangedWeapon>();
+
+        PlayerStats.weaponList[0] = GetComponentInChildren<MeleeWeapon>();
+        PlayerStats.weaponList[0].equipable = true;
+        PlayerStats.weaponList[1] = GetComponentInChildren<RangedWeapon>();
+        ((RangedWeapon)PlayerStats.weaponList[1]).GatherAmmo(50);
+        arm.enabled = false;
+        shoulder.enabled = false;
+        PlayerStats.weaponList[0].gameObject.GetComponent<SpriteRenderer>().enabled = true;
+
+
         airTime = 0;
         jetpackTime = moveSettings.resetTimeJetpack;
         rb = gameObject.GetComponent<Rigidbody2D>();
-        sidewaysInput =  jumpInput = jetpackInput = switchWeapon= 0;
+        sidewaysInput =  jumpInput = jetpackInput = switchWeapon=fire= 0;
         velocity = new Vector2(0, 0);
 	}
 	
 	// Update is called once per frame
 	void Update () {
         GetInput();
-	}
+    }
 
     void FixedUpdate()
     {
@@ -47,7 +58,6 @@ public class Player : MonoBehaviour {
     {
         jumpInput = 0;
         jetpackInput = 0;
-        switchWeapon = 0;
         sidewaysInput = Input.GetAxis("Horizontal");
         if (!Grounded())
         {
@@ -62,19 +72,34 @@ public class Player : MonoBehaviour {
         {
             jetpackInput = 1.0f;
         }
-        if (Input.GetKey(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             switchWeapon = 1.0f;
         }
+        if (Input.GetMouseButtonDown(0))
+        {
+            fire = 1.0f;
+        }
+
+        float AngleRad = Mathf.Atan2(Input.mousePosition.y - transform.position.y, Input.mousePosition.x - transform.position.x);
+        float AngleDeg = (180 / Mathf.PI) * AngleRad;
+        PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.transform.rotation = Quaternion.Euler(0, 0, AngleDeg);
     }
     private void Weapon()
     {
+        if (fire != 0.0f)
+        {
+            PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.GetComponent<Weapon>().Attack();
+        }
         if (switchWeapon != 0.0f)
         {
+            PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.GetComponent<SpriteRenderer>().enabled = false;
             do
             {
                 PlayerStats.equipedWeapon = (PlayerStats.equipedWeapon + 1) % PlayerStats.weaponList.Length;
             } while (!PlayerStats.weaponList[PlayerStats.equipedWeapon].equipable);
+            PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.GetComponent<SpriteRenderer>().enabled = true;
+            switchWeapon = 0.0f;
         }
     }
     private void Move()
