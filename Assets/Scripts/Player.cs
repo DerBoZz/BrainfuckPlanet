@@ -22,6 +22,8 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        //remove reset!
+        PlayerStats.reset();
         airTime = 0;
         jetpackTime = moveSettings.resetTimeJetpack;
         rb = gameObject.GetComponent<Rigidbody2D>();
@@ -81,7 +83,7 @@ public class Player : MonoBehaviour {
     }
     private bool Grounded()
     {
-        return Physics2D.Raycast(transform.position, Vector2.down, gameObject.GetComponent<BoxCollider2D>().size.y/2+0.1f, moveSettings.ground);
+        return Physics2D.Raycast(transform.position, Vector2.down, 1.2f, moveSettings.ground);
     }
 
 

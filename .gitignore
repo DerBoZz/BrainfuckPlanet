@@ -17,7 +17,7 @@ ExportedObj/
 *.pidb
 *.booproj
 *.svd
-
+*.meta
 
 # Unity3D generated meta files
 *.pidb.meta
@@ -79,3 +79,4 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+*.meta
