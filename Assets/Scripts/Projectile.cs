@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ public class Projectile : MonoBehaviour {
 
     public int damage;
 
-    public string tagName;
+    public String tagName;
 
     public float moveSpeed = 6.0f;
     private float lifetime = 2.0f;
@@ -25,7 +26,14 @@ public class Projectile : MonoBehaviour {
     {
         if(col.tag == tagName)
         {
-            col.gameObject.GetComponent<Enemy>().Damage(damage);
+            if(tagName == "Player")
+            {
+                col.gameObject.GetComponent<Player>().Damage(damage);
+            }
+            else
+            {
+                col.gameObject.GetComponent<Enemy>().Damage(damage);
+            }
             Destroy(gameObject);
         }
     }
