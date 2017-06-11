@@ -19,6 +19,7 @@ public class RangedWeapon : Weapon {
             //Facing Left
             Instantiate(projectilePrefab, gameObject.GetComponentsInChildren<Transform>()[1].transform.position, transform.rotation * Quaternion.Euler(0,0,180));
         }
+        GetComponent<AudioSource>().Play();
         ammunition--;
         if(ammunition <= 0)
         {

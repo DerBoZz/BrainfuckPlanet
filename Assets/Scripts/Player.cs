@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
     [System.Serializable]
     public class MoveSettings
     {
@@ -16,7 +17,7 @@ public class Player : MonoBehaviour {
     }
     public MoveSettings moveSettings;
     private Vector2 velocity;
-    private float sidewaysInput, jumpInput , jetpackInput, switchWeaponInput, fire;
+    private float sidewaysInput, jumpInput, jetpackInput, switchWeaponInput, fire;
     private float jetpackTime, airTime;
     private Rigidbody2D rb;
 
@@ -26,7 +27,8 @@ public class Player : MonoBehaviour {
     public SpriteRenderer arm;
     public SpriteRenderer shoulder;
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         //remove reset!
         PlayerStats.reset();
 
@@ -39,16 +41,18 @@ public class Player : MonoBehaviour {
         PlayerStats.weaponList[0].gameObject.GetComponent<SpriteRenderer>().enabled = true;
 
         anim = GetComponent<Animator>();
-        
+
         jetpackTime = moveSettings.resetTimeJetpack;
         rb = gameObject.GetComponent<Rigidbody2D>();
-        sidewaysInput = airTime=  jumpInput = jetpackInput = switchWeaponInput=fire= 0;
+        sidewaysInput = airTime = jumpInput = jetpackInput = switchWeaponInput = fire = 0;
         velocity = new Vector2(0, 0);
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         GetInput();
+        footsteps();
     }
 
     void FixedUpdate()
@@ -57,7 +61,7 @@ public class Player : MonoBehaviour {
         Move();
         Jump();
         Animation();
-        if (switchWeaponInput!=0.0f)
+        if (switchWeaponInput != 0.0f)
         {
             SwitchWeapon();
             switchWeaponInput = 0.0f;
@@ -77,7 +81,7 @@ public class Player : MonoBehaviour {
             jumpInput = 1.0f;
             airTime = 0;
         }
-        if(Input.GetKey(KeyCode.Space) && !Grounded() && airTime > 0.2f)
+        if (Input.GetKey(KeyCode.Space) && !Grounded() && airTime > 0.2f)
         {
             jetpackInput = 1.0f;
         }
@@ -102,7 +106,7 @@ public class Player : MonoBehaviour {
             transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
 
-        if(PlayerStats.weaponList[PlayerStats.equipedWeapon].GetType().ToString() == "RangedWeapon")
+        if (PlayerStats.weaponList[PlayerStats.equipedWeapon].GetType().ToString() == "RangedWeapon")
         {
             //RangedWeapon look at mouse
             Vector3 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.transform.position);
@@ -120,7 +124,7 @@ public class Player : MonoBehaviour {
                 PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.transform.Rotate(new Vector3(0, 0, 1), 180);
             }
         }
-        
+
     }
     private void FireWeapon()
     {
@@ -137,12 +141,12 @@ public class Player : MonoBehaviour {
     }
     private void SwitchWeapon()
     {
-            PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.GetComponent<SpriteRenderer>().enabled = false;
-            do
-            {
-                PlayerStats.equipedWeapon = (PlayerStats.equipedWeapon + 1) % PlayerStats.weaponList.Length;
-            } while (!PlayerStats.weaponList[PlayerStats.equipedWeapon].equipable);
-            PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        do
+        {
+            PlayerStats.equipedWeapon = (PlayerStats.equipedWeapon + 1) % PlayerStats.weaponList.Length;
+        } while (!PlayerStats.weaponList[PlayerStats.equipedWeapon].equipable);
+        PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.GetComponent<SpriteRenderer>().enabled = true;
     }
     private void Move()
     {
@@ -158,10 +162,10 @@ public class Player : MonoBehaviour {
             rb.velocity = new Vector2(rb.velocity.x, moveSettings.jumpVelocity);
             jetpackTime = moveSettings.resetTimeJetpack;
         }
-        else if(jetpackInput != 0 && jetpackTime >= 0)
+        else if (jetpackInput != 0 && jetpackTime >= 0)
         {
 
-            rb.velocity = new Vector2(rb.velocity.x, moveSettings.jetpackVelocity * Time.deltaTime + rb.velocity.y*0.99f);
+            rb.velocity = new Vector2(rb.velocity.x, moveSettings.jetpackVelocity * Time.deltaTime + rb.velocity.y * 0.99f);
             jetpackTime -= Time.deltaTime;
         }
 
@@ -176,7 +180,7 @@ public class Player : MonoBehaviour {
     public void Damage(int damage)
     {
         PlayerStats.playerHealth -= damage;
-        if(PlayerStats.playerHealth <= 0)
+        if (PlayerStats.playerHealth <= 0)
         {
             //SceneManagement.loadScene("Menue");
         }
@@ -226,5 +230,18 @@ public class Player : MonoBehaviour {
 
         anim.SetBool("Melee", false);
         attacking = false;
+    }
+    void footsteps()
+    {
+        if (Grounded() == true && anim.GetBool("Moving"))
+        {
+            GetComponent<AudioSource>().enabled = true;
+            Debug.Log("run pls");
+        }
+        else
+        {
+            Debug.Log("stahp pls");
+            GetComponent<AudioSource>().enabled = false;
+        }
     }
 }

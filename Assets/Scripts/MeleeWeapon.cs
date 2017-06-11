@@ -14,7 +14,7 @@ public class MeleeWeapon : Weapon {
 
     public override void Attack()
     {
-
+        GetComponent<AudioSource>().Play();
         RaycastHit rh;
         if (Physics.Raycast(transform.position, Vector3.forward, out rh, meleeRange, LayerMask.NameToLayer("Enemy")))
         {
