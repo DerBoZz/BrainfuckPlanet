@@ -33,14 +33,17 @@ public class EnemyMelee : Enemy {
             else if (forward && current + 1 < waypoints.Length)
             {
                 current++;
+                transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
             }
             else if (!forward && current - 1 >= 0)
             {
                 current--;
+                transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
             }
-            if (current + 1 >= waypoints.Length || current - 1 < 0)
+            else if (current + 1 >= waypoints.Length || current - 1 < 0)
             {
                 forward = !forward;
+                /*ransform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);*/
             }
         }
         else
