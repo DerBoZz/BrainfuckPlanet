@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         GetInput();
-        footsteps();
+        Footsteps();
     }
 
     void FixedUpdate()
@@ -231,16 +231,14 @@ public class Player : MonoBehaviour
         anim.SetBool("Melee", false);
         attacking = false;
     }
-    void footsteps()
+    private void Footsteps()
     {
-        if (Grounded() == true && anim.GetBool("Moving"))
+        if (Grounded() && anim.GetBool("Moving"))
         {
             GetComponent<AudioSource>().enabled = true;
-            Debug.Log("run pls");
         }
         else
         {
-            Debug.Log("stahp pls");
             GetComponent<AudioSource>().enabled = false;
         }
     }
