@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyMeleeAttackRange : MonoBehaviour {
 
-	void OnTriggerEnter2D(Collider2D col)
+	void OnTrigger2D(Collider2D col)
     {
         if (col.gameObject.tag == "Player")
         {
