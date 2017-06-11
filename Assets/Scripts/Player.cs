@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         //remove reset!
-        PlayerStats.reset();
+        
 
         PlayerStats.weaponList[0] = GetComponentInChildren<MeleeWeapon>();
         PlayerStats.weaponList[0].equipable = true;

@@ -13,6 +13,7 @@ public class StartGame : MonoBehaviour {
     {
         if (Input.anyKeyDown)
         {
+            PlayerStats.reset();
             SceneManagement.nextScene();
         }
     }

@@ -8,6 +8,7 @@ public class SwitchScene : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         timer = 4f;
+        
 	}
 	
 	// Update is called once per frame
@@ -15,7 +16,12 @@ public class SwitchScene : MonoBehaviour {
         timer -= Time.deltaTime;
         if(timer <= 0)
         {
+                
             SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+            if (sceneName == "Startscreen")
+            {
+                PlayerStats.reset();
+            }
             //int index = SceneManager.GetActiveScene().buildIndex;
             //index = (index + 1) % SceneManager.sceneCount;
             //SceneManager.LoadScene(index);
