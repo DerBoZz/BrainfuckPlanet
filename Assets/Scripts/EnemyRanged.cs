@@ -32,4 +32,10 @@ public class EnemyRanged : Enemy {
             }
         }        
     }
+    
+    private IEnumerator Wait(Collider2D collision)
+    {
+        yield return new WaitForSeconds(2.0f);
     }
+
+}
