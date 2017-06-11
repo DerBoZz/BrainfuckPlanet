@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
         PlayerStats.weaponList[0] = GetComponentInChildren<MeleeWeapon>();
         PlayerStats.weaponList[0].equipable = true;
         PlayerStats.weaponList[1] = GetComponentInChildren<RangedWeapon>();
-        ((RangedWeapon)PlayerStats.weaponList[1]).GatherAmmo(50);
+        ((RangedWeapon)PlayerStats.weaponList[1]).GatherAmmo(9999999);
         arm.enabled = false;
         shoulder.enabled = false;
         PlayerStats.weaponList[0].gameObject.GetComponent<SpriteRenderer>().enabled = true;

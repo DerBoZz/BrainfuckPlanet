@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class SwitchScene : MonoBehaviour {
-
-    float timer;
+    public string sceneName;
+    public float timer;
 	// Use this for initialization
 	void Start () {
-        timer = 10f;
+        timer = 4f;
 	}
 	
 	// Update is called once per frame
@@ -15,9 +15,10 @@ public class SwitchScene : MonoBehaviour {
         timer -= Time.deltaTime;
         if(timer <= 0)
         {
-            int index = SceneManager.GetActiveScene().buildIndex;
-            index = (index + 1) % SceneManager.sceneCount;
-            SceneManager.LoadScene(index);
+            SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+            //int index = SceneManager.GetActiveScene().buildIndex;
+            //index = (index + 1) % SceneManager.sceneCount;
+            //SceneManager.LoadScene(index);
         }
 	}
 }
