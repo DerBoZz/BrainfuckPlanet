@@ -30,9 +30,8 @@ public class EnemyRanged : Enemy {
             gameObject.GetComponent<CircleCollider2D>().enabled = true;
             if (raycast.collider != null && raycast.collider.tag == "Player")
             {
-                GameObject bullet = Instantiate(projectile, transform.position,Quaternion.identity);
-                bullet.transform.Translate((raycast.point - new Vector2(transform.position.x, transform.position.y)).normalized * 1.0f);
-                bullet.transform.rotation = Quaternion.LookRotation(bullet.transform.position);
+                GameObject project = Instantiate(projectile, transform.position,Quaternion.identity);
+
             }
         }
         
