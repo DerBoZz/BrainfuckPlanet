@@ -43,7 +43,6 @@ public class EnemyMelee : Enemy {
             else if (current + 1 >= waypoints.Length || current - 1 < 0)
             {
                 forward = !forward;
-                /*ransform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);*/
             }
         }
         else
