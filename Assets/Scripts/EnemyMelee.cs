@@ -45,7 +45,7 @@ public class EnemyMelee : Enemy {
         }
         else
         {
-            ExecuteAttack();
+            StartCoroutine(ChargeAttack());
             Debug.Log("Attacking");
         }
         
@@ -57,33 +57,19 @@ public class EnemyMelee : Enemy {
         directionPlayer = aDirectionPlayer;
     }
 
-    private void ExecuteAttack()
-    {
-        anim.SetBool("Attacking", true);
 
-        if( anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
-        {
-            RaycastHit2D rh = Physics2D.Raycast(transform.position, directionPlayer, meleeRange, 1 << LayerMask.NameToLayer("Player"));
-            if (rh.collider != null)
-            {
-                rh.collider.gameObject.GetComponent<Player>().Damage(damage);
-            }
-            anim.SetBool("Attacking", false);
-        }
-
-
-    }
 
     private IEnumerator ChargeAttack()
     {
         //Play Animation
         anim.SetBool("Attacking", true);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1.0f);
         RaycastHit2D rh = Physics2D.Raycast(transform.position, directionPlayer, meleeRange, 1 << LayerMask.NameToLayer("Player"));
         if (rh.collider != null)
         {
             rh.collider.gameObject.GetComponent<Player>().Damage(damage);
         }
+        anim.SetBool("Attacking", false);
         attacking = false;
     }
 }
