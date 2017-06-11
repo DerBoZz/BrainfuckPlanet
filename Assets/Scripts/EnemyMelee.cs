@@ -46,7 +46,6 @@ public class EnemyMelee : Enemy {
         else
         {
             StartCoroutine(ChargeAttack());
-            Debug.Log("Attacking");
         }
         
     }

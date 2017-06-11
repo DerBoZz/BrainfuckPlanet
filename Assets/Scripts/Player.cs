@@ -21,6 +21,7 @@ public class Player : MonoBehaviour {
     private Rigidbody2D rb;
 
     private Animator anim;
+    private bool attacking = false;
 
     public SpriteRenderer arm;
     public SpriteRenderer shoulder;
@@ -126,6 +127,7 @@ public class Player : MonoBehaviour {
         if (fire != 0.0f)
         {
             PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.GetComponent<Weapon>().Attack();
+            attacking = true;
             if (!PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.GetComponent<Weapon>().equipable)
             {
                 SwitchWeapon();
@@ -210,5 +212,19 @@ public class Player : MonoBehaviour {
             anim.SetBool("Flying", false);
             anim.SetBool("Jumping", false);
         }
+        if (attacking && PlayerStats.weaponList[PlayerStats.equipedWeapon].gameObject.GetComponent<Weapon>().GetType().ToString() == "MeleeWeapon")
+        {
+            anim.SetBool("Melee", true);
+
+            StartCoroutine(WaitForAttack());
+        }
+    }
+
+    private IEnumerator WaitForAttack()
+    {
+        yield return new WaitForSeconds(0.75f);
+
+        anim.SetBool("Melee", false);
+        attacking = false;
     }
 }
