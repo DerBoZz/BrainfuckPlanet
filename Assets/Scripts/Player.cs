@@ -182,7 +182,7 @@ public class Player : MonoBehaviour
         PlayerStats.playerHealth -= damage;
         if (PlayerStats.playerHealth <= 0)
         {
-            //SceneManagement.loadScene("Menue");
+            SceneManagement.loadSceneByIndex(0);
         }
     }
 
